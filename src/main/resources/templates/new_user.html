@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление нового пользователя</title>
+    <style>
+        /* Центрирование формы */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Стили для формы */
+        form {
+            width: 300px; /* Ширина формы */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Стили для элементов формы */
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        form input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <form th:method="POST" th:action="@{/}" th:object="${newUser}">
+        <input type="hidden" name="id" th:field="*{id}">
+        <label for="firstName">Введите имя: </label>
+        <input name="firstName" type="text" id="firstName" th:field="*{firstName}">
+        <span th:errors="*{firstName}" style="color: red;"></span>
+        <br><br>
+        <label for="lastName">Фамилия</label>
+        <input name="lastName" type="text" id="lastName" th:field="*{lastName}"/>
+        <span th:errors="*{lastName}" style="color: red;"></span>
+        <br><br>
+        <label for="phoneNamber">Телефон</label>
+        <input name="phoneNamber" type="text" id="phoneNamber" th:field="*{phoneNamber}"/>
+        <br><br>
+        <label for="email">Email</label>
+        <input name="email" type="text" id="email" th:field="*{email}"/>
+        <span th:errors="*{email}" style="color: red;"></span>
+        <br><br>
+        <input type="submit" value="Подтвердить!"/>
+        <br><br>
+        <input type="button" value="Обратно к списку"
+               onclick="window.location.href = '/'">
+    </form>
+</div>
+</body>
+</html>

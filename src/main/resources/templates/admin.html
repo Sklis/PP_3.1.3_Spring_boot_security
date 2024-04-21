@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* Стили для контейнера */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px; /* Добавляем внутренние отступы для контейнера */
+        }
+
+        /* Стили для таблицы */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Стили для кнопки */
+        input[type="button"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px; /* Отступ сверху для кнопки */
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h2>Люди</h2>
+        <br>
+        <table>
+            <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Номер телефона</th>
+                <th>Email</th>
+                <th>Операции</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.phoneNamber}"></td>
+                <td th:text="${user.email}"></td>
+                <td><form th:action="@{/update_info}" method="get">
+                    <input type="hidden" name="id" th:value="${user.id}" />
+                    <button type="submit">Редактировать</button>
+                </form>
+                    <!-- Форма для удаления-->
+                    <form th:action="@{/delete}" method="post">
+                        <input type="hidden" name="id" th:value="${user.id}" />
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <input type="button" value="Добавить человека"
+               onclick="window.location.href = 'addNewUser'">
+    </div>
+</div>
+</body>
+</html>
