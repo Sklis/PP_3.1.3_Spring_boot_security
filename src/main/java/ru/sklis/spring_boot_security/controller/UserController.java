@@ -71,7 +71,7 @@ public class UserController {
             userService.updateUser(user);
         } else {
             if (userService.uniqueUsername(user)) {
-                model.addAttribute("uniqueUsername", "Пользователь с таким сеществует");
+                model.addAttribute("uniqueUsername", "Пользователь с таким логином сеществует");
                 return "new_user";
             }
             userService.saveUser(user);
