@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Добавление нового пользователя</title>
+    <title>Add new user</title>
     <style>
         /* Центрирование формы */
         .container {
@@ -15,25 +15,40 @@
 
         /* Стили для формы */
         form {
-            width: 300px; /* Ширина формы */
+            width: 400px; /* Ширина формы */
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        /* Стили для таблицы */
+        table {
+            width: 100%;
+        }
+
+        table tr td {
+            padding: 8px 0;
         }
 
         /* Стили для элементов формы */
         form label {
+            font-weight: bold;
             display: block;
             margin-bottom: 5px;
         }
 
-        form input {
+        form input[type="text"],
+        form input[type="password"],
+        form input[type="submit"],
+        form input[type="button"] {
             width: calc(100% - 10px);
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 3px;
+            font-size: 16px;
         }
 
         form input[type="submit"] {
@@ -41,37 +56,77 @@
             color: #fff;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         form input[type="submit"]:hover {
             background-color: #0056b3;
         }
-    </style>
 
+        form input[type="button"] {
+            background-color: #ccc;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form input[type="button"]:hover {
+            background-color: #bbb;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <form th:method="POST" th:action="@{/}" th:object="${newUser}">
-        <input type="hidden" name="id" th:field="*{id}">
-        <label for="firstName">Введите имя: </label>
-        <input name="firstName" type="text" id="firstName" th:field="*{firstName}">
-        <span th:errors="*{firstName}" style="color: red;"></span>
-        <br><br>
-        <label for="lastName">Фамилия</label>
-        <input name="lastName" type="text" id="lastName" th:field="*{lastName}"/>
-        <span th:errors="*{lastName}" style="color: red;"></span>
-        <br><br>
-        <label for="phoneNamber">Телефон</label>
-        <input name="phoneNamber" type="text" id="phoneNamber" th:field="*{phoneNamber}"/>
-        <br><br>
-        <label for="email">Email</label>
-        <input name="email" type="text" id="email" th:field="*{email}"/>
-        <span th:errors="*{email}" style="color: red;"></span>
-        <br><br>
-        <input type="submit" value="Подтвердить!"/>
-        <br><br>
-        <input type="button" value="Обратно к списку"
-               onclick="window.location.href = '/'">
+    <form th:method="POST" th:action="@{/save}" th:object="${userNew}">
+        <input name="id" type="hidden" id="id" th:value="${userNew.id}">
+        <table>
+            <tr>
+                <td><label for="firstName">Имя:</label></td>
+                <td><input name="firstName" type="text" id="firstName" th:field="*{firstName}">
+                    <span th:errors="*{firstName}" style="color: red;"></span>
+                </td>
+
+            </tr>
+            <tr>
+                <td><label for="lastName">Фамилия:</label></td>
+                <td><input name="lastName" type="text" id="lastName" th:field="*{lastName}">
+                    <span th:errors="*{lastName}" style="color: red;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="email">Email:</label></td>
+                <td><input name="email" type="text" id="email" th:field="*{email}"></td>
+                <span th:errors="*{email}" style="color: red;"></span>
+            </tr>
+            <tr>
+                <td><label for="username">Логин:</label></td>
+                <td><input name="username" type="text" id="username" th:field="*{username}">
+                    <span th:if="${uniqueUsername}" th:text="${uniqueUsername}" style="color: red;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="password">Пароль:</label></td>
+                <td><input name="password" type="text" id="password" th:field="*{password}"></td>
+                <span th:errors="*{password}" style="color: red;"></span>
+            </tr>
+            <tr>
+                <td><label for="roles">Роли:</label></td>
+                <td>
+                    <p th:each="role : ${roles}">
+                        <input type="checkbox" name="roles" id="roles" th:value="${role.getId()}" th:text="${role.getRoleName()}"
+                               th:field="*{roles}">
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Подтвердить!"/>
+                    <input type="button" value="Обратно к списку" onclick="window.location.href = '/admin'">
+                    <input type="button" value="Выход" onclick="window.location.href = '/logout'">
+                </td>
+            </tr>
+        </table>
     </form>
 </div>
 </body>

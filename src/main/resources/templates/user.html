@@ -1,11 +1,106 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Стили для контейнера */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px; /* Добавляем внутренние отступы для контейнера */
+        }
+
+        /* Стили для таблицы */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Стили для кнопки */
+        input[type="button"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px; /* Отступ сверху для кнопки */
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        h1, h2, p {
+            margin: 0 0 10px; /* Добавляем отступы для заголовков и параграфов */
+        }
+    </style>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-
-
+<div class="container">
+    <div>
+        <h1>Приветствую,
+            <td th:text="${user.firstName}"></td>
+            !
+        </h1>
+        <h2>Информация о пользователе</h2>
+        <table>
+            <tr>
+                <td>Имя:</td>
+                <td th:text="${user.firstName}"></td>
+            </tr>
+            <tr>
+                <td>Фамилия:</td>
+                <td th:text="${user.lastName}"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td th:text="${user.email}"></td>
+            </tr>
+            <tr>
+                <td>Права доступа:</td>
+                <td>
+                    <span th:each="role : ${user.getRoles()}">
+                        <span th:text="${role.roleName}"></span><br>
+        </span>
+                </td>
+            </tr>
+            <tr>
+                <td>Логин:</td>
+                <td th:text="${user.username}"></td>
+            </tr>
+            <tr>
+                <td>Пароль:</td>
+                <td th:text="${user.password}"></td>
+            </tr>
+        </table>
+        <br><br>
+        <input type="button" value="Выход" onclick="window.location.href = '/logout'">
+    </div>
+</div>
 </body>
 </html>
